@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fitness Recommendation</title>
+    <link rel="stylesheet" href="{% static 'styles/styles2.css' %}">
+  </head>
+  
+  <body>
+    <header>
+      <nav>
+        <div class="nav__header">
+          <div class="nav__logo">
+            <a href="#">
+              <img src="{% static 'assets/logo-white.png' %}" alt="logo" class="logo-white" />
+              <img src="{% static 'assets/logo-dark.png' %}" alt="logo" class="logo-dark" />
+            </a>
+          </div>
+          <ul class="nav__links" id="nav-links">
+            <!-- Home as a button with the home-btn class -->
+            <li><a href="{% url 'home' %}" class="home-btn">Home</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <div class="section__container">
+      <h2 class="section__header">Get Your Personalized Recommendation</h2>
+      <form action="{% url 'recommend' %}" method="POST" class="form-container">
+        {% csrf_token %}
+        <input type="number" name="weight" placeholder="Weight (kg)" class="form-input" required />
+        <input type="text" name="height" placeholder="Height (m)" class="form-input" required />
+        <input type="number" name="age" placeholder="Age" class="form-input" required />
+        <input type="text" name="gender" placeholder="Gender" class="form-input" required />
+        <input type="submit" value="Get Recommendation" class="btn" />
+      </form>
+    </div>
+  
+    <footer class="footer">
+      <div class="footer__bar">
+        Copyright &copy; 2025 G1 jijo. All rights reserved.
+      </div>
+    </footer>
+  </body>
+</html>

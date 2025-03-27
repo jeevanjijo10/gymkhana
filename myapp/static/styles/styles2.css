@@ -1,0 +1,135 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap");
+
+:root {
+  --primary-color: #42c8c9;
+  --secondary-color: #d6abd8;
+  --text-dark: #020617;
+  --text-light: #94a3b8;
+  --extra-light: #e2e8f0;
+  --white: #ffffff;
+  --gradient-1: linear-gradient(to right, #eeb5c6, #b2b4e4, #b3b4e4);
+  --gradient-2: linear-gradient(to right, #eeb5c4, #beb0e1, #7ed6d8);
+  --max-width: 1200px;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--extra-light);
+  color: var(--text-dark);
+  text-align: center;
+}
+
+.section__container {
+  max-width: var(--max-width);
+  margin: auto;
+  padding: 5rem 1rem;
+}
+
+.section__header {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 2rem;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  background: var(--white);
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: auto;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--text-light);
+  border-radius: 5px;
+  font-size: 1rem;
+  outline: none;
+}
+
+.btn {
+  width: 100%;
+  padding: 0.75rem;
+  border: none;
+  font-size: 1rem;
+  color: var(--white);
+  background-color: var(--primary-color);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background-color: var(--secondary-color);
+}
+
+.footer {
+  background-color: var(--text-dark);
+}
+.footer__bar {
+  padding: 7rem;
+  font-size: 0.9rem;
+  color: var(--text-light);
+  text-align: center;
+  border-top: 1px solid var(--text-light);
+}
+.nav__header {
+  padding: 1rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--text-dark);
+}
+
+.nav__logo img {
+  max-width: 175px;
+}
+
+.nav__logo .logo-dark {
+  display: none;
+}
+.nav__links{
+  display: flex;
+  text-decoration: none;
+}
+/* Specific styles for the Home button */
+.home-btn {
+  color: white; /* White text color */
+  padding: 10px 20px; /* Padding for the button */
+  border-radius: 5px; /* Rounded corners */
+  font-weight: bold; /* Bold text */
+  text-transform: uppercase; /* Uppercase text */
+  transition: background-color 0.3s ease; /* Smooth transition */
+  text-decoration: none; /* Remove underline */
+}
+
+.home-btn:hover {
+  background-color: #00eeff; /* Darker green on hover */
+}
+.back-btn {
+  color: white; /* White text color */
+  padding: 10px 20px; /* Padding for the button */
+  border-radius: 5px; /* Rounded corners */
+  font-weight: bold; /* Bold text */
+  text-transform: uppercase; /* Uppercase text */
+  transition: background-color 0.3s ease; /* Smooth transition */
+  text-decoration: none; /* Remove underline */
+}
+
+.back-btn:hover {
+  background-color: #00eeff; /* Darker green on hover */
+}

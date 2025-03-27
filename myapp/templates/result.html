@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workout Plan</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .btn-save {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+        .btn-save:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Workout Plan</h1>
+        <p><strong>BMI:</strong> {{ bmi }}</p>
+        <p><strong>BMI Category:</strong> {{ bmi_category }}</p>
+        <p><strong>Age:</strong> {{ age }}</p>
+        <p><strong>Gender:</strong> {{ gender }}</p>
+
+        <table>
+            <tr>
+                <th>Day</th>
+                <th>Workout</th>
+                <th>Weight</th>
+                <th>Reps</th>
+            </tr>
+            {% for day, workout, weight, reps in recommendations %}
+            <tr>
+                <td>{{ day }}</td>
+                <td>{{ workout }}</td>
+                <td>{{ weight }}</td>
+                <td>{{ reps }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <!-- Save Plan Form -->
+        <form method="post" action="{% url 'save_workout_plan' %}">
+            {% csrf_token %}
+            <input type="hidden" name="bmi_category" value="{{ bmi_category }}">
+            <input type="hidden" name="bmi" value="{{ bmi }}">
+            <input type="hidden" name="age" value="{{ age }}">
+            <input type="hidden" name="gender" value="{{ gender }}">
+
+            {% for day, workout, weight, reps in recommendations %}
+                <input type="hidden" name="day_{{ forloop.counter }}_workout" value="{{ workout }}">
+                <input type="hidden" name="day_{{ forloop.counter }}_weight" value="{{ weight }}">
+                <input type="hidden" name="day_{{ forloop.counter }}_reps" value="{{ reps }}">
+            {% endfor %}
+
+            <button type="submit" class="btn-save">Save Plan</button>
+        </form>
+    </div>
+
+</body>
+</html>

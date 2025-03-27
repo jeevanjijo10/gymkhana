@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+
+
+
+<div class="container mt-4">
+    <h2 class="text-left">🏋️ Welcome, {{ request.user.username }}!</h2>
+
+    <!-- Membership Section -->
+    <div class="card mt-3">
+        <div class="card-body">
+            <h4>Membership Status: <span> {{ member.status }} </span> </h4>
+            <h5>Get your personalized workout recommendations</h5>
+
+            <a class="btn btn-success" href="{% url 'saved_workout_plan' %}" >View workout plan</a>
+            <a class="btn btn-success" href="{% url 'recommend' %}" >Get recommendations</a>
+        </div>
+    </div>
+
+    <!-- Class Bookings -->
+    <div class="card mt-3">
+        <div class="card-body">
+            <h4>Your Booked Classes</h4>
+            {% if bookings %}
+                <ul class="list-group">
+                    {% for booking in bookings %}
+                        <li class="list-group-item">
+                            {{ booking.gym_class.name }} - {{booking.gym_class.trainer}} - {{booking.gym_class.date}}   {{ booking.gym_class.schedule }}
+                            <a href="{% url 'cancel_booking' booking.id %}" class="btn btn-danger btn-sm float-end">Cancel</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No class bookings yet.</p>
+            {% endif %}
+        </div>
+    </div>
+    
+
+    <!-- classes display section  -->
+    <div class="card mt-3">
+        <div class="card-body">
+            <h4>Available classes</h4>
+            {% if classes %}
+                <ul class="list-group">
+                    {% for class in classes %}
+                        <li class="list-group-item">
+                            {{ class.name}} - {{class.trainer}} - {{class.date}} 
+                            <a href="{% url 'book_class' class.id %}" class="btn btn-success btn-sm float-end">Book</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No upcoming classes.</p>
+            {% endif %}
+        </div>
+    </div>
+    <!-- Trainers Section -->
+    <div class="card mt-3">
+        <div class="card-body">
+            <h4>Our Trainers</h4>
+            <div class="row">
+                {% for trainer in trainers %}
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5>{{ trainer.name }}</h5>
+                            <p>Specialty: {{ trainer.specialization }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock %}

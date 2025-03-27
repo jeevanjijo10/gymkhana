@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Your Saved Workout Plan</h2>
+
+    {% if saved_recommendation %}
+        <p><strong>BMI:</strong> {{ saved_recommendation.bmi_value }}</p>
+        <p><strong>BMI Category:</strong> {{ saved_recommendation.bmi_category }}</p>
+        <p><strong>Age:</strong> {{ saved_recommendation.age }}</p>
+        <p><strong>Gender:</strong> {{ saved_recommendation.gender }}</p>
+
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>Day</th>
+                    <th>Workout</th>
+                    <th>Weight</th>
+                    <th>Reps</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for workout in workouts %}
+                <tr>
+                    <td>Day {{ workout.day }}</td>
+                    <td>{{ workout.workout }}</td>
+                    <td>{{ workout.weight|default:"-" }}</td>
+                    <td>{{ workout.reps|default:"-" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No saved workout plan found.</p>
+    {% endif %}
+</div>
+{% endblock %}
