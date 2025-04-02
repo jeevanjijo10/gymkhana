@@ -1,9 +1,11 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <title>GYMKHANAFitness</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -15,6 +17,11 @@
             min-height: 100vh;
             margin: 0;
             padding: 20px;
+        }
+        
+        .logo-container {
+            margin-bottom: 30px;
+            text-align: center;
         }
         
         h2 {
@@ -99,6 +106,11 @@
     </style>
 </head>
 <body>
+    <!-- Logo placed at the top outside the form -->
+    <div class="logo-container">
+        <img src="{% static 'assets/logo-dark.png' %}" alt="logo" class="logo-dark" style="max-height: 50px;" />
+    </div>
+    
     <h2>Register</h2>
 
     <form method="POST">
@@ -154,7 +166,6 @@
         
         <button type="submit">Sign Up</button>
     </form>
-    
 
     <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
 </body>

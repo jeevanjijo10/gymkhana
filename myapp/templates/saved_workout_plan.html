@@ -1,37 +1,162 @@
 {% extends "base.html" %}
-
 {% block content %}
-<div class="container mt-4">
-    <h2>Your Saved Workout Plan</h2>
+
+<style>
+    .workout-plan-container {
+        padding: 20px;
+        background-color: #f8f9fc;
+    }
+    
+    .workout-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #e3e6f0;
+    }
+    
+    .workout-header h2 {
+        color: var(--dark-color);
+        margin: 0;
+    }
+    
+    .user-stats {
+        display: flex;
+        gap: 20px;
+        background-color: white;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
+    }
+    
+    .stat-item {
+        text-align: center;
+    }
+    
+    .stat-value {
+        font-weight: bold;
+        color: var(--primary-color);
+        font-size: 18px;
+    }
+    
+    .stat-label {
+        font-size: 14px;
+        color: var(--dark-color);
+        opacity: 0.8;
+    }
+    
+    .workout-table {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
+        overflow: hidden;
+    }
+    
+    .workout-table th {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 15px;
+    }
+    
+    .workout-table td {
+        padding: 12px 15px;
+        vertical-align: middle;
+    }
+    
+    .workout-table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    
+    .no-plan-message {
+        text-align: center;
+        padding: 40px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
+    }
+    
+    .no-plan-message i {
+        font-size: 50px;
+        color: var(--danger-color);
+        margin-bottom: 20px;
+    }
+    
+    .no-plan-message p {
+        font-size: 18px;
+        color: var(--dark-color);
+    }
+    
+    .no-plan-message a {
+        margin-top: 15px;
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+    
+    .btn-primary .fas {
+        color: white;
+    }
+</style>
+
+<div class="workout-plan-container">
+    <div class="workout-header">
+        <h2><i class="fas fa-dumbbell me-2"></i> Your Saved Workout Plan</h2>
+        
+        {% if saved_recommendation %}
+        <div class="user-stats">
+            <div class="stat-item">
+                <div class="stat-value">{{ saved_recommendation.bmi_value }}</div>
+                <div class="stat-label">BMI</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">{{ saved_recommendation.bmi_category }}</div>
+                <div class="stat-label">Category</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">{{ saved_recommendation.age }}</div>
+                <div class="stat-label">Age</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">{{ saved_recommendation.gender }}</div>
+                <div class="stat-label">Gender</div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
 
     {% if saved_recommendation %}
-        <p><strong>BMI:</strong> {{ saved_recommendation.bmi_value }}</p>
-        <p><strong>BMI Category:</strong> {{ saved_recommendation.bmi_category }}</p>
-        <p><strong>Age:</strong> {{ saved_recommendation.age }}</p>
-        <p><strong>Gender:</strong> {{ saved_recommendation.gender }}</p>
-
-        <table class="table table-bordered mt-3">
-            <thead>
-                <tr>
-                    <th>Day</th>
-                    <th>Workout</th>
-                    <th>Weight</th>
-                    <th>Reps</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for workout in workouts %}
-                <tr>
-                    <td>Day {{ workout.day }}</td>
-                    <td>{{ workout.workout }}</td>
-                    <td>{{ workout.weight|default:"-" }}</td>
-                    <td>{{ workout.reps|default:"-" }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="workout-table">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Day</th>
+                        <th>Workout</th>
+                        <th>Weight</th>
+                        <th>Reps</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for workout in workouts %}
+                    <tr>
+                        <td><strong>Day {{ workout.day }}</strong></td>
+                        <td>{{ workout.workout }}</td>
+                        <td>{{ workout.weight|default:"-" }}</td>
+                        <td>{{ workout.reps|default:"-" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     {% else %}
-        <p>No saved workout plan found.</p>
+        <div class="no-plan-message">
+            <i class="fas fa-exclamation-circle"></i>
+            <p>No saved workout plan found.</p>
+            <a href="{% url 'recommend' %}" class="btn btn-primary">
+                <i class="fas fa-magic me-1"></i> Get Recommendations
+            </a>
+        </div>
     {% endif %}
 </div>
+
 {% endblock %}

@@ -1,82 +1,391 @@
 {% extends "base.html" %}
 {% block content %}
 
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    
+    :root {
+        --primary-color: #4e73df;
+        --success-color: #1cc88a;
+        --info-color: #36b9cc;
+        --warning-color: #f6c23e;
+        --danger-color: #ff1500;
+        --dark-color: #695a5a;
+        --light-color: #f8f9fc;
+    }
+    
+    body {
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    .dashboard-container {
+        padding: 20px;
+        background-color: #f8f9fc;
+    }
+    
+    .profile-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 30px;
+        animation: fadeIn 0.8s ease;
+    }
+    
+    .profile-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background-color: var(--primary-color);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 36px;
+        font-weight: bold;
+        margin-right: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .user-info h2 {
+        margin: 0;
+        color: var(--dark-color);
+        font-weight: 600;
+    }
+    
+    .membership-badge {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 14px;
+        margin-top: 5px;
+    }
+    
+    .membership-active {
+        background-color: var(--success-color);
+        color: white;
+    }
+    
+    .membership-inactive {
+        background-color: var(--danger-color);
+        color: rgb(255, 255, 255);
+    }
+    
+    .card {
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(0, 30, 254, 0.15);
+        margin-bottom: 20px;
+        transition: transform 0.3s ease;
+        animation: slideUp 0.6s ease;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.5rem 2rem 0 rgba(58, 59, 69, 0.2);
+    }
+    
+    .card-header {
+        background-color: #f8f9fc;
+        border-bottom: 1px solid #e3e6f0;
+        padding: 15px 20px;
+        border-radius: 10px 10px 0 0 !important;
+        font-weight: 600;
+    }
+    
+    .card-body {
+        padding: 20px;
+    }
+    
+    .btn-success {
+        background-color: var(--success-color);
+        border-color: var(--success-color);
+        font-weight: 500;
+        padding: 8px 16px;
+        box-shadow: 0 2px 4px rgba(26, 200, 138, 0.3);
+        transition: all 0.3s ease;
+    }
+    
+    .btn-success:hover {
+        background-color: #17a673;
+        border-color: #17a673;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(26, 200, 138, 0.4);
+    }
+    
+    .btn-outline-primary {
+        font-weight: 500;
+        padding: 8px 16px;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-outline-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 2px 4px rgba(78, 115, 223, 0.3);
+    }
+    
+    .list-group-item {
+        border: 1px solid #e3e6f0;
+        margin-bottom: 5px;
+        border-radius: 5px !important;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 0.3s ease;
+    }
+    
+    .list-group-item:hover {
+        background-color: #f8f9fc;
+    }
+    
+    .trainer-card {
+        text-align: center;
+        padding: 20px;
+        border-radius: 8px;
+        background-color: var(--light-color);
+        margin-bottom: 15px;
+        transition: all 0.3s ease;
+        animation: fadeIn 0.8s ease;
+    }
+    
+    .trainer-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .trainer-card h5 {
+        color: var(--primary-color);
+        margin-bottom: 10px;
+        font-weight: 600;
+    }
+    
+    .trainer-avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-color: var(--primary-color);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        font-weight: bold;
+        margin: 0 auto 15px auto;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .section-title {
+        color: var(--dark-color);
+        border-bottom: 2px solid var(--primary-color);
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        display: inline-block;
+        font-weight: 600;
+    }
+    
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+    }
+    
+    .status-indicator {
+        height: 10px;
+        width: 10px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 5px;
+    }
+    
+    .status-active {
+        background-color: var(--success-color);
+    }
+    
+    .status-pending {
+        background-color: var(--warning-color);
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    
+    @keyframes slideUp {
+        from { 
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to { 
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .pulse {
+        animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+        0% {
+            box-shadow: 0 0 0 0 rgba(28, 200, 138, 0.7);
+        }
+        70% {
+            box-shadow: 0 0 0 10px rgba(28, 200, 138, 0);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(28, 200, 138, 0);
+        }
+    }
+    
+    .table-hover tbody tr {
+        transition: all 0.3s ease;
+    }
+    
+    .table-hover tbody tr:hover {
+        background-color: #f8f9fc;
+        transform: translateX(5px);
+    }
+</style>
 
-
-
-
-<div class="container mt-4">
-    <h2 class="text-left">🏋️ Welcome, {{ request.user.username }}!</h2>
-
-    <!-- Membership Section -->
-    <div class="card mt-3">
-        <div class="card-body">
-            <h4>Membership Status: <span> {{ member.status }} </span> </h4>
-            <h5>Get your personalized workout recommendations</h5>
-
-            <a class="btn btn-success" href="{% url 'saved_workout_plan' %}" >View workout plan</a>
-            <a class="btn btn-success" href="{% url 'recommend' %}" >Get recommendations</a>
+<div class="dashboard-container">
+    <!-- Profile Header -->
+    <div class="profile-header">
+        <div class="profile-avatar">
+            {{ request.user.username|first|upper }}
+        </div>
+        <div class="user-info">
+            <h2>Welcome, {{ request.user.username }}!</h2>
+            <span class="membership-badge membership-{{ member.status|lower }}">
+                {{ member.status }} Member
+            </span>
         </div>
     </div>
-
-    <!-- Class Bookings -->
-    <div class="card mt-3">
+    
+    <div class="row">
+        <!-- Membership Section -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-dumbbell me-2"></i> Your Membership
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Personalized Workout Plans</h5>
+                    <p class="card-text">Access your custom workout recommendations based on your fitness goals and level.</p>
+                    <div class="action-buttons">
+                        <a class="btn btn-success pulse" href="{% url 'saved_workout_plan' %}">
+                            <i class="fas fa-eye me-1"></i> View Workout Plan
+                        </a>
+                        <a class="btn btn-outline-primary" href="{% url 'recommend' %}">
+                            <i class="fas fa-magic me-1"></i> Get Recommendations
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Class Bookings -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-calendar-check me-2"></i> Your Booked Classes
+                </div>
+                <div class="card-body">
+                    {% if bookings %}
+                        <ul class="list-group">
+                            {% for booking in bookings %}
+                                <li class="list-group-item">
+                                    <div>
+                                        <strong>{{ booking.gym_class.name }}</strong><br>
+                                        <small class="text-muted">
+                                            {{ booking.gym_class.trainer }} | {{ booking.gym_class.date }} {{ booking.gym_class.schedule }}
+                                        </small>
+                                    </div>
+                                    <a href="{% url 'cancel_booking' booking.id %}" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-times"></i> Cancel
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <div class="text-center py-3">
+                            <i class="fas fa-calendar-times fa-2x text-muted mb-2"></i>
+                            <p>No class bookings yet.</p>
+                            <a href="#classes-section" class="btn btn-sm btn-primary">Browse Classes</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Classes Section -->
+    <div class="card mt-4" id="classes-section">
+        <div class="card-header">
+            <i class="fas fa-list-alt me-2"></i> Available Classes
+        </div>
         <div class="card-body">
-            <h4>Your Booked Classes</h4>
-            {% if bookings %}
-                <ul class="list-group">
-                    {% for booking in bookings %}
-                        <li class="list-group-item">
-                            {{ booking.gym_class.name }} - {{booking.gym_class.trainer}} - {{booking.gym_class.date}}   {{ booking.gym_class.schedule }}
-                            <a href="{% url 'cancel_booking' booking.id %}" class="btn btn-danger btn-sm float-end">Cancel</a>
-                        </li>
-                    {% endfor %}
-                </ul>
+            {% if classes %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Class</th>
+                                <th>Trainer</th>
+                                <th>Date & Time</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for class in classes %}
+                                <tr>
+                                    <td><strong>{{ class.name }}</strong></td>
+                                    <td>{{ class.trainer }}</td>
+                                    <td>{{ class.date }} {{ class.schedule }}</td>
+                                    <td>
+                                        <a href="{% url 'book_class' class.id %}" class="btn btn-sm btn-success">
+                                            <i class="fas fa-bookmark me-1"></i> Book Now
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             {% else %}
-                <p>No class bookings yet.</p>
+                <div class="text-center py-4">
+                    <i class="fas fa-dumbbell fa-3x text-muted mb-3"></i>
+                    <p>No upcoming classes available at the moment.</p>
+                </div>
             {% endif %}
         </div>
     </div>
     
-
-    <!-- classes display section  -->
-    <div class="card mt-3">
-        <div class="card-body">
-            <h4>Available classes</h4>
-            {% if classes %}
-                <ul class="list-group">
-                    {% for class in classes %}
-                        <li class="list-group-item">
-                            {{ class.name}} - {{class.trainer}} - {{class.date}} 
-                            <a href="{% url 'book_class' class.id %}" class="btn btn-success btn-sm float-end">Book</a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <p>No upcoming classes.</p>
-            {% endif %}
-        </div>
-    </div>
     <!-- Trainers Section -->
-    <div class="card mt-3">
+    <div class="card mt-4">
+        <div class="card-header">
+            <i class="fas fa-users me-2"></i> Our Expert Trainers
+        </div>
         <div class="card-body">
-            <h4>Our Trainers</h4>
             <div class="row">
                 {% for trainer in trainers %}
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5>{{ trainer.name }}</h5>
-                            <p>Specialty: {{ trainer.specialization }}</p>
+                <div class="col-md-4 mb-4">
+                    <div class="trainer-card">
+                        <div class="trainer-avatar">
+                            {{ trainer.name|first|upper }}
                         </div>
+                        <h5>{{ trainer.name }}</h5>
+                        <p class="text-muted">
+                            <i class="fas fa-star text-warning"></i> {{ trainer.specialization }}
+                        </p>
+                        <small class="text-info">
+                            <i class="fas fa-award"></i> Certified Professional
+                        </small>
                     </div>
                 </div>
                 {% endfor %}
             </div>
         </div>
     </div>
-
 </div>
-
 
 {% endblock %}
